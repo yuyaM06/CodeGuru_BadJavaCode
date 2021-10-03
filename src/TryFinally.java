@@ -9,8 +9,8 @@ import java.io.IOException;
 class TryFinally {
 
   protected void tryFinallyCopy(String src, String dest) throws IOException {
-	  String inFilePath = "D:\\A.txt";
-      String outFilePath = "D:\\C.txt";
+	  String inFilePath = "D:\\foo.txt";
+      String outFilePath = "D:\\bar.txt";
 
       FileInputStream in = null;
       FileOutputStream out = null;
@@ -20,7 +20,7 @@ class TryFinally {
           out = new FileOutputStream(outFilePath);
           int c;
 
-          // データをコピーする
+          // データコピー
           while ((c = in.read()) != -1) {
               out.write(c);
           }
@@ -29,14 +29,14 @@ class TryFinally {
       } finally {
           if (in != null) {
               try {
-                  in.close();
+                  in.close();	// 入力ストリームを閉じて、関連システムリソースを解放
               } catch (IOException e) {
                   e.printStackTrace();
               }
           }
           if (out != null) {
               try {
-                  out.close();
+                  out.close();	// 出力ストリームを閉じ、関連システムリソースを解放
               } catch (IOException e) {
                   e.printStackTrace();
               }
@@ -46,14 +46,15 @@ class TryFinally {
   
   
   protected void tryWithResourceCopy(String src, String dest) throws IOException {
-	  String inFilePath = "D:\\A.txt";
-      String outFilePath = "D:\\C.txt";
+	  String inFilePath = "D:\\foo.txt";
+      String outFilePath = "D:\\bar.txt";
 
+      // tryブロックを抜けるときにリソースを解放
       try (FileInputStream in = new FileInputStream(inFilePath);
               FileOutputStream out = new FileOutputStream(outFilePath);) {
           int c;
 
-          // データをコピーする
+          // データコピー
           while ((c = in.read()) != -1) {
               out.write(c);
           }

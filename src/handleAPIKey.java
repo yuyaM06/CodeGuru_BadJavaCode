@@ -3,10 +3,8 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 
 public class handleAPIKey {
-	
-	
 
-	static String myKeyId ="AKIAX742FUDUQXXXXXXX";
+	static String myKeyId ="ABCD1234XXXXXXX";
 	static String mySecretKey = "MySecretKey";
 
 	public static void main(String[] args) {
