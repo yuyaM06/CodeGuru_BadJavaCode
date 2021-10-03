@@ -1,6 +1,5 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -10,36 +9,54 @@ import java.io.IOException;
 class TryFinally {
 
   protected void tryFinallyCopy(String src, String dest) throws IOException {
-	  BufferedReader br = null;
+	  String inFilePath = "D:\\A.txt";
+      String outFilePath = "D:\\C.txt";
+
+      FileInputStream in = null;
+      FileOutputStream out = null;
+
       try {
-          br = new BufferedReader(new FileReader("test.txt"));
-          String line = null;
-          while ((line = br.readLine()) != null) {
-              System.out.println(line);
+          in = new FileInputStream(inFilePath);
+          out = new FileOutputStream(outFilePath);
+          int c;
+
+          // データをコピーする
+          while ((c = in.read()) != -1) {
+              out.write(c);
           }
-      } catch (FileNotFoundException e) {
-          e.printStackTrace();
       } catch (IOException e) {
           e.printStackTrace();
       } finally {
-          if (br != null)
+          if (in != null) {
               try {
-                  br.close();
+                  in.close();
               } catch (IOException e) {
                   e.printStackTrace();
               }
+          }
+          if (out != null) {
+              try {
+                  out.close();
+              } catch (IOException e) {
+                  e.printStackTrace();
+              }
+          }
       }
   }
   
   
   protected void tryWithResourceCopy(String src, String dest) throws IOException {
-	  try (BufferedReader br = new BufferedReader(new FileReader("test.txt"))) {
-          String line = null;
-          while ((line = br.readLine()) != null) {
-              System.out.println(line);
+	  String inFilePath = "D:\\A.txt";
+      String outFilePath = "D:\\C.txt";
+
+      try (FileInputStream in = new FileInputStream(inFilePath);
+              FileOutputStream out = new FileOutputStream(outFilePath);) {
+          int c;
+
+          // データをコピーする
+          while ((c = in.read()) != -1) {
+              out.write(c);
           }
-      } catch (FileNotFoundException e) {
-          e.printStackTrace();
       } catch (IOException e) {
           e.printStackTrace();
       }
